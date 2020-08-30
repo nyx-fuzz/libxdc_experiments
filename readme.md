@@ -37,11 +37,18 @@ The bars show the average slowdown over the best decoder. The error bars represe
 ### Initial Setup:
 ```
 git clone 'https://github.com/nyx-fuzz/libxdc_experiments.git'
-cd libxdc_experiments
 git clone 'https://github.com/nyx-fuzz/libxdc.git'
 cd libxdc
 make
-cd ..
+cd ../libxdc_experiments/experiments
+```
+### Evaluation:
+```
+# setup up everything in libxdc_experiments/experiments
+bash prepare_eval.sh
+python3 run_eval.py
+# grab a cup of coffee
+python3 plot_eval.py
 ```
 
 ### Regression Tests:
@@ -49,16 +56,6 @@ cd ..
 cd test_data
 sh dynamic_test.sh
 cd ..
-```
-
-### Evaluation:
-```
-# setup up everything
-bash setup.sh
-bash prepare_eval.sh
-python3 run_eval.py
-# grab a cup of coffee
-python3 plot_eval.py
 ```
 
 ## Bug Reports and Contributions
