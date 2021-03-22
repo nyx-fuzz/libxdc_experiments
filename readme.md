@@ -28,7 +28,7 @@ We used these libraries to decode a few thousand iterations of Intel-PT data res
 
 As you can see in this entirely unscientific benchmark, libxdc is about 15x-30x faster than libipt and quite a bit faster than all other options that are returning a coverage bitmap. Only the last option (Killerbeez) manages to perform similar, while producing vastly less useful results. 
 
-The bars show the average slowdown over the best decoder. The error bars represent the best and the worst performance across 3 runs each. 
+The bars show the average slowdown over the best decoder. The error bars represent the best and the worst performance across 3 runs (each decoding a few thousand traces). 
 
 ![](experiments/eval.png)
 ## Usage
