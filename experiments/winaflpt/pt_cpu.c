@@ -27,7 +27,7 @@
  */
 
 #include "pt_cpu.h"
-#include "pt_cpuid.h"
+//#include "pt_cpuid.h"
 
 #include "intel-pt.h"
 

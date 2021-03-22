@@ -1,0 +1,49 @@
+diff --git a/honey_tester/unit_testing/ha_session_audit.c b/honey_tester/unit_testing/ha_session_audit.c
+index 9f992aa..a3c288d 100644
+--- a/honey_tester/unit_testing/ha_session_audit.c
++++ b/honey_tester/unit_testing/ha_session_audit.c
+@@ -253,7 +253,7 @@ int ha_session_audit_libipt_drag_race(ha_session_t session, unsigned int iterati
+ 
+     uint64_t total_libipt_time = 0;
+     /* Test libipt */
+-    for (unsigned int i = 0; i < iterations; i++) {
++    for (unsigned int i = 0; i < 0; i++){ //iterations; i++) {
+         uint64_t start = current_clock();
+         struct pt_block block;
+         while (1) {
+@@ -299,7 +299,22 @@ int ha_session_audit_libipt_drag_race(ha_session_t session, unsigned int iterati
+     printf(TAG "libipt: rounds=%u, total time=%"PRIu64" ns, average=%f\n", iterations, total_libipt_time,
+            ((double) total_libipt_time) / iterations);
+ 
++
+     uint64_t total_honeybee_time = 0;
++
++
++    uint64_t start_tmp = current_clock();
++    result = ha_session_decode(session, nop_decode_block, NULL);
++    uint64_t stop_tmp = current_clock();
++
++    printf("run_time_cold= %lf\n", (double)stop_tmp - start_tmp);
++
++    if ((result = ha_session_reconfigure_with_terminated_trace_buffer(session, trace_buffer,
++                                                                          trace_length, session->trace_slide)) < 0) {
++        printf(TAG "Drag race failed, Honeybee failed to reset. error=%d\n", result);
++        goto CLEANUP;
++    }
++
+     /* Test Honeybee */
+     for (unsigned int i = 0; i < iterations; i++) {
+         uint64_t start = current_clock();
+@@ -319,10 +334,12 @@ int ha_session_audit_libipt_drag_race(ha_session_t session, unsigned int iterati
+         }
+ 
+ //        printf(TAG "Honeybee round %u/%u: duration = %" PRIu64 "ns\n", i + 1, iterations, stop - start);
++		printf("run_time=      %f\n", (double)stop - start);
+         printf("%"PRIu64"\n", stop - start);
+         total_honeybee_time += stop - start;
+     }
+ 
++	printf("average=       %f\n", ((double) total_honeybee_time) / iterations);	
+     printf(TAG "Honeybee: rounds=%u, total time=%"PRIu64" ns, average=%f\n", iterations, total_honeybee_time,
+            ((double) total_honeybee_time) / iterations);
+ 

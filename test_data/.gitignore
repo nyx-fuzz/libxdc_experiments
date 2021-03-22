@@ -1,1 +1,5 @@
 .vscode
+kafl_eval/data.pagecache
+avscript_32/page_cache
+infinite_loop_linux/page_cache
+qemu/page_cache

@@ -3,11 +3,12 @@ import json
 import time
 
 print("please run echo 1 | sudo tee /sys/devices/system/cpu/intel_pstate/no_turbo to reduce variance")
+print("please run echo 0 | sudo tee /proc/sys/kernel/randomize_va_space to reduce variance")
 
 EXPERIMENTS = [
     {
         "name": "mruby",
-        "trace": "/tmp/mruby_2GB",
+        "trace": "tmp_data//mruby_2GB",
         "image": "../test_data/mruby/data",
         "base":  0x400000,
         "end":   0x4b6000,
@@ -15,7 +16,7 @@ EXPERIMENTS = [
     },
     {
         "name": "unzip",
-        "trace": "/tmp/unzip_2GB",
+        "trace": "tmp_data//unzip_2GB",
         "image": "../test_data/Unzip/data",
         "base":  0x400000,
         "end":   0x427000,
@@ -23,7 +24,7 @@ EXPERIMENTS = [
     },
     {
         "name": "kafl",
-        "trace": "/tmp/kafl_eval_2GB",
+        "trace": "tmp_data/kafl_eval_2GB",
         "image": "../test_data/kafl_eval/data.pagecache",
         "base":  0xffffffff83a00000,
         "end":    0xffffffff83a26160,
@@ -31,7 +32,7 @@ EXPERIMENTS = [
     },
     {
         "name": "foo",
-        "trace": "/tmp/foo_2GB",
+        "trace": "tmp_data/foo_2GB",
         "image": "../test_data/foo/data",
         "base":  0x7ffff7819000,
         "end":   0x7ffff79ca000,
@@ -39,7 +40,7 @@ EXPERIMENTS = [
     },
     {
         "name": "kernel",
-        "trace": "/tmp/Kernel_2GB",
+        "trace": "tmp_data/Kernel_2GB",
         "image": "../test_data/Kernel/data",
         "base":  0xffffffff81000000, 
         "end":   0xffffffff81e53ba0,
@@ -47,7 +48,7 @@ EXPERIMENTS = [
     },
     {
         "name": "avscript32",
-        "trace": "/tmp/avscript_2GB",
+        "trace": "tmp_data/avscript_2GB",
         "image": "../test_data/avscript_32/page_cache",
         "base":  0x1000,
         "end":   0xfffff000,
@@ -56,7 +57,7 @@ EXPERIMENTS = [
 
     {
         "name": "infiniteloop1",
-        "trace": "/tmp/infinite_loop_linux1_2GB",
+        "trace": "tmp_data/infinite_loop_linux1_2GB",
         "image": "../test_data/infinite_loop_linux/page_cache",
         "base":  0xffffffff81000000,
         "end":   0xffffffff81e54000,
@@ -64,7 +65,7 @@ EXPERIMENTS = [
     },
     {
         "name": "qemu",
-        "trace": "/tmp/qemu1_2GB",
+        "trace": "tmp_data/qemu1_2GB",
         "image": "../test_data/qemu/page_cache",
         "base":  0x000555555554000,
         "end":   0x00555555d60000,

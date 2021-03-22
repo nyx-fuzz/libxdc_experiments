@@ -7,6 +7,7 @@
 #include <errno.h>
 #include <assert.h>
 #include <inttypes.h>
+#include <time.h>
 
 #include <libxdc.h>
 #include "page_cache.h"
@@ -49,6 +50,66 @@ int simple_test(uint64_t filter[4][2], uint8_t* trace, uint64_t trace_size, cons
 }
 
 
+static long current_clock() {
+    struct timespec tv;
+    clock_gettime(CLOCK_MONOTONIC_RAW, &tv);
+
+    return tv.tv_sec * 1e9 + tv.tv_nsec;
+}
+
+#define ITERATIONS 25
+
+int performance_avg_test(uint64_t filter[4][2], uint8_t* trace, uint64_t trace_size, const char* page_cache_file, uint64_t final_hash){
+	int ret_val;
+	decoder_result_t ret;
+
+	page_cache_t* page_cache =  page_cache_new(page_cache_file);
+	void* bitmap = malloc(0x10000);
+  libxdc_t* decoder = libxdc_init(filter, &page_cache_fetch, page_cache, bitmap, 0x10000);
+
+	uint64_t start_time = current_clock();
+	uint64_t run_time = 0;
+
+	// cold run
+	start_time = current_clock();
+  ret = libxdc_decode(decoder, trace, trace_size);
+
+  if(ret != decoder_success && ret != decoder_success_pt_overflow){
+  	printf("[*] decode_buffer failed\n");
+    goto fail;
+  }
+  printf("run_time_cold= %lf\n", (double)(current_clock() - start_time));
+
+	
+	double data = 0.0;
+	clock_t begin_time = clock();
+	for(int j = 0; j < ITERATIONS; j++){
+		start_time = current_clock();
+		ret = libxdc_decode(decoder, trace, trace_size);
+		run_time = current_clock() - start_time;
+
+		if(ret != decoder_success && ret != decoder_success_pt_overflow){
+			printf("[*] decode_buffer failed\n");
+			goto fail;
+		}
+
+		data += (double)run_time;
+		printf("run_time=      %f\n", (double)run_time);
+	}
+
+	printf("average=       %f\n", data/(double)ITERATIONS);	
+
+	ret_val = 0;
+
+	fail:
+
+	page_cache_destroy(page_cache);
+	libxdc_free(decoder);
+	free(bitmap);
+
+	return ret_val;
+}
+
 int main(int argc, char** argv){
 
 	uint64_t filter[4][2] = {0};
@@ -75,7 +136,12 @@ int main(int argc, char** argv){
 	filter[0][0] = start;
 	filter[0][1] = end;
 
-	ret_val = simple_test(filter, trace, trace_size, image, final_hash);
+	if(getenv("HONEYBEE_EVAL")){
+		performance_avg_test(filter, trace, trace_size, image, final_hash);
+	}
+	else{
+		ret_val = simple_test(filter, trace, trace_size, image, final_hash);
+	}
 
 	free(trace);	
 

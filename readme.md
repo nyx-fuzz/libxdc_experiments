@@ -53,9 +53,13 @@ python3 plot_eval.py
 
 ### Regression Tests:
 ```
-cd test_data
-sh dynamic_test.sh
-cd ..
+sh setup_regression_tests.sh
+sh run_regression_tests.sh
+
+# additional regression tests based on honeybee's unittest data
+cd test_data_honeybee
+sh setup.sh
+sh run_libxdc_regression_tests.sh
 ```
 
 ## Bug Reports and Contributions

@@ -24,7 +24,7 @@
 
 #include "intel-pt.h"
 #include "pt_cpu.h"
-#include "pt_cpuid.h"
+//#include "pt_cpuid.h"
 #include "pt_opcodes.h"
 #include "pt_retstack.h"
 #include "pt_block_decoder.h"

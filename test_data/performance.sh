@@ -1,9 +1,0 @@
-ASAN_OPTIONS=detect_leaks=1 LD_LIBRARY_PATH=../bin/ ../bin/tester 0x400000 0x427000  ./Unzip/data Unzip/trace 0x0 performance
-ASAN_OPTIONS=detect_leaks=1 LD_LIBRARY_PATH=../bin/ ../bin/tester 7ffff7819000 7ffff79ca000 ./foo/data foo/trace 0x0 performance
-ASAN_OPTIONS=detect_leaks=1 LD_LIBRARY_PATH=../bin/ ../bin/tester 0xffffffff81000000 ffffffff81e53ba0 ./Kernel/data Kernel/trace 0x0 performance
-ASAN_OPTIONS=detect_leaks=1 LD_LIBRARY_PATH=../bin/ ../bin/tester 00400000 4b6000 ./mruby/data ./mruby/trace 0x0 performance
-ASAN_OPTIONS=detect_leaks=1 LD_LIBRARY_PATH=../bin/ ../bin/tester 0xffffffff83a00000 0xffffffff83a26160 ./kafl_eval/data.pagecache ./kafl_eval/sample1_1x 0x0 performance
-ASAN_OPTIONS=detect_leaks=1 LD_LIBRARY_PATH=../bin/ ../bin/tester 0xffffffff83a00000 0xffffffff83a26160 ./kafl_eval/data.pagecache ./kafl_eval/sample1_1x_sanx 0x0 performance
-ASAN_OPTIONS=detect_leaks=1 LD_LIBRARY_PATH=../bin/ ../bin/tester 0x000555555554000 0x00555555d60000 ./qemu/page_cache ./qemu/trace1 0x0 performance
-ASAN_OPTIONS=detect_leaks=1 LD_LIBRARY_PATH=../bin/ ../bin/tester 0xffffffff81000000 0xffffffff81e53ba0 infinite_loop_linux/page_cache infinite_loop_linux/loop_trace_26023_0 0x0 performance
-ASAN_OPTIONS=detect_leaks=1 LD_LIBRARY_PATH=../bin/ ../bin/tester 0x1000 0x7ffffffff000 ./avscript_32/page_cache ./avscript_32/failed_trace_12709_1 0x0 performance 

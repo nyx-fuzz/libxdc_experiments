@@ -1,0 +1,4 @@
+*/*.dump
+*/*.addr
+honeybee_unittest_data/
+__MACOSX/
