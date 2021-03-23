@@ -48,14 +48,11 @@ The results of our experiments are presented below. It should be noted that we o
 ### Initial Setup:
 ```
 git clone 'https://github.com/nyx-fuzz/libxdc_experiments.git'
-git clone 'https://github.com/nyx-fuzz/libxdc.git'
-cd libxdc
-make
-cd ../libxdc_experiments/experiments
+cd libxdc_experiments
 ```
 ### Evaluation:
 ```
-# setup up everything in libxdc_experiments/experiments
+cd experiments/
 bash prepare_eval.sh
 python3 run_eval.py
 # grab a cup of coffee
