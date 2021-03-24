@@ -1,6 +1,7 @@
 import subprocess
 import json
 import time
+import os
 
 print("please run echo 1 | sudo tee /sys/devices/system/cpu/intel_pstate/no_turbo to reduce variance")
 print("please run echo 0 | sudo tee /proc/sys/kernel/randomize_va_space to reduce variance")
@@ -100,12 +101,27 @@ TOOLS = [
     }
 ]
 
+# override tools to rerun eval only partially
+# TOOLS = [
+#     {
+#         "name": "libxdc_patched",
+#         "path": "./libxdc_patched/tester"
+#     },
+# ]
+
 NUM_RUNS = 3
 
+def load_old(name):
+    path = "results/results_%s.json"%name
+    if not os.path.isfile(path):
+        return {}
+    with open(path,"r") as f:
+        return json.load(f)
 
 for exp in EXPERIMENTS:
-    res = {}
-    res[exp["name"]] = {}
+    res = load_old(exp["name"])
+    if not exp["name"] in res:
+        res[exp["name"]] = {}
     tt = res[exp["name"]]
     for tool in TOOLS:
         tt[tool["name"]] = []
@@ -125,5 +141,6 @@ for exp in EXPERIMENTS:
             dur = end-start
             tt_res.append(dur)
 
+    print(repr(res))
     with open("results/results_%s.json"%(exp["name"]),"w") as f:
         json.dump(res, f)
