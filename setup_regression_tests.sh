@@ -1,4 +1,4 @@
 git clone https://github.com/nyx-fuzz/libxdc.git
 cd libxdc && \
-make 
+make tester_static
 cd -
