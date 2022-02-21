@@ -12,6 +12,11 @@ for res_path in glob.glob("results/*.json"):
 targets=["mruby", "unzip", "kafl", "foo", "kernel", "avscript32", "infiniteloop1", "qemu"]
 tools = ["libxdc", "killerbeez", "PTrix", "honggfuzz", "WinAFL",  "libipt",]
 names = ["{\\large\\textbf{\\textsc{libxdc}}}", "{\small killerbeez}", "{\small PTrix}", "{\small honggfuzz}", "{\small WinAFL}",  "{\small libipt}",]
+
+## use these tools/names if you are comparing libxdc against a patched version 
+#tools = ["libxdc", "libxdc_patched"]
+#names = ["{\\large\\textbf{\\textsc{libxdc}}}", "{\small patched}"]
+
 dpi=160
 fig = plt.figure(figsize=(10, 10), dpi=dpi)
 #plt.rcParams.update({
@@ -64,7 +69,10 @@ axR.set_xticklabels(target_labels)
 axR.set_xlim(ax.get_xlim())
 axR.set_xlabel('Target', fontsize=18)
 
+
 ticks = [1.0,1.2,1.4,1.6,1.8,2,3,4,5,6,7,8,9,10,20,30,40]
+## use these ticks to look at diffs betwen libxdc patchlevels
+#ticks = [1.0,1.01, 1.02, 1.05, 1.1,1.2]
 ax.set_yticklabels([str(t)+"x" for t in ticks])
 ax.set_yticks(ticks)
 
